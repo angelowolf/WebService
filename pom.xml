@@ -4,7 +4,7 @@
 
     <groupId>IAEW</groupId>
     <artifactId>WebService</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.00.000</version>
     <packaging>war</packaging>
 
     <name>WebService</name>
@@ -96,14 +96,10 @@
                             <goal>wsimport</goal>
                         </goals>
                         <configuration>
-                            <wsdlFiles>
-                                <wsdlFile>localhost_8080/WebService/LineasAereas.wsdl</wsdlFile>
-                            </wsdlFiles>
                             <packageName>edu.frc.iaew.services</packageName>
                             <vmArgs>
                                 <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
-                            </vmArgs>
-                            <wsdlLocation>http://localhost:8080/WebService/LineasAereas?wsdl</wsdlLocation>
+                            </vmArgs>                            
                             <staleFile>${project.build.directory}/jaxws/stale/LineasAereas.stale</staleFile>
                         </configuration>
                         <id>wsimport-generate-LineasAereas</id>
