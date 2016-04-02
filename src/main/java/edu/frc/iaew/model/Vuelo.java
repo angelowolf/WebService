@@ -1,30 +1,40 @@
-
 package edu.frc.iaew.model;
 
 import java.util.Date;
-import java.util.Objects;
 
 /**
+ * Representa un vuelo entre dos aeropuertos.
  *
  * @author Angelo Wolf, Patricio Carranza
  * @version 1.00.000 02/04/2016
  */
 public class Vuelo {
-    
+
+    private int idVuelo;
     private Aeropuerto aeropuertoOrigen;
     private Aeropuerto aeropuertoDestino;
     private Date fechaSalida;
     private Date fechaRetorno;
     private Clase clase;
 
-    public Vuelo() {}
+    public Vuelo() {
+    }
 
-    public Vuelo(Aeropuerto aeropuertoOrigen, Aeropuerto aeropuertoDestino, Date fechaSalida, Date fechaRetorno, Clase clase) {
+    public Vuelo(int idVuelo, Aeropuerto aeropuertoOrigen, Aeropuerto aeropuertoDestino, Date fechaSalida, Date fechaRetorno, Clase clase) {
+        this.idVuelo = idVuelo;
         this.aeropuertoOrigen = aeropuertoOrigen;
         this.aeropuertoDestino = aeropuertoDestino;
         this.fechaSalida = fechaSalida;
         this.fechaRetorno = fechaRetorno;
         this.clase = clase;
+    }
+
+    public int getIdVuelo() {
+        return idVuelo;
+    }
+
+    public void setIdVuelo(int idVuelo) {
+        this.idVuelo = idVuelo;
     }
 
     public Aeropuerto getAeropuertoOrigen() {
@@ -70,11 +80,7 @@ public class Vuelo {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.aeropuertoOrigen);
-        hash = 97 * hash + Objects.hashCode(this.aeropuertoDestino);
-        hash = 97 * hash + Objects.hashCode(this.fechaSalida);
-        hash = 97 * hash + Objects.hashCode(this.fechaRetorno);
-        hash = 97 * hash + Objects.hashCode(this.clase);
+        hash = 79 * hash + this.idVuelo;
         return hash;
     }
 
@@ -90,29 +96,28 @@ public class Vuelo {
             return false;
         }
         final Vuelo other = (Vuelo) obj;
-        if (!Objects.equals(this.aeropuertoOrigen, other.aeropuertoOrigen)) {
-            return false;
-        }
-        if (!Objects.equals(this.aeropuertoDestino, other.aeropuertoDestino)) {
-            return false;
-        }
-        if (!Objects.equals(this.fechaSalida, other.fechaSalida)) {
-            return false;
-        }
-        if (!Objects.equals(this.fechaRetorno, other.fechaRetorno)) {
-            return false;
-        }
-        if (this.clase != other.clase) {
-            return false;
-        }
-        return true;
+        return this.getIdVuelo() == other.getIdVuelo();
     }
 
     @Override
     public String toString() {
         return "Vuelo {" + "aeropuertoOrigen=" + aeropuertoOrigen + ", aeropuertoDestino=" + aeropuertoDestino + ", fechaSalida=" + fechaSalida + ", fechaRetorno=" + fechaRetorno + ", clase=" + clase + '}';
     }
-    
-    
-    
+
+    /**
+     * Devuelve los aeropuertos que intervienen en este vuelo.
+     *
+     * @return
+     * AeropuertoOrigen{aeropuertoOrigen.toString()}\nAeropuertoDestino{aeropuertoDestino.toString()}
+     */
+    public String getAeropuertos() {
+        StringBuilder str = new StringBuilder();
+        str.append("AeropuertoOrigen {");
+        str.append(getAeropuertoOrigen().toString());
+        str.append("}\n");
+        str.append("AeropuertoDestino {");
+        str.append(getAeropuertoDestino().toString());
+        str.append("}");
+        return str.toString();
+    }
 }
