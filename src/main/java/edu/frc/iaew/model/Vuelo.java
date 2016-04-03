@@ -1,6 +1,6 @@
 package edu.frc.iaew.model;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 /**
  * Representa un vuelo entre dos aeropuertos.
@@ -13,14 +13,14 @@ public class Vuelo {
     private int idVuelo;
     private Aeropuerto aeropuertoOrigen;
     private Aeropuerto aeropuertoDestino;
-    private Date fechaSalida;
-    private Date fechaRetorno;
+    private DateTime fechaSalida;
+    private DateTime fechaRetorno;
     private Clase clase;
 
     public Vuelo() {
     }
 
-    public Vuelo(int idVuelo, Aeropuerto aeropuertoOrigen, Aeropuerto aeropuertoDestino, Date fechaSalida, Date fechaRetorno, Clase clase) {
+    public Vuelo(int idVuelo, Aeropuerto aeropuertoOrigen, Aeropuerto aeropuertoDestino, DateTime fechaSalida, DateTime fechaRetorno, Clase clase) {
         this.idVuelo = idVuelo;
         this.aeropuertoOrigen = aeropuertoOrigen;
         this.aeropuertoDestino = aeropuertoDestino;
@@ -53,19 +53,19 @@ public class Vuelo {
         this.aeropuertoDestino = aeropuertoDestino;
     }
 
-    public Date getFechaSalida() {
+    public DateTime getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(Date fechaSalida) {
+    public void setFechaSalida(DateTime fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 
-    public Date getFechaRetorno() {
+    public DateTime getFechaRetorno() {
         return fechaRetorno;
     }
 
-    public void setFechaRetorno(Date fechaRetorno) {
+    public void setFechaRetorno(DateTime fechaRetorno) {
         this.fechaRetorno = fechaRetorno;
     }
 
@@ -101,7 +101,7 @@ public class Vuelo {
 
     @Override
     public String toString() {
-        return "Vuelo {" + "aeropuertoOrigen=" + aeropuertoOrigen + ", aeropuertoDestino=" + aeropuertoDestino + ", fechaSalida=" + fechaSalida + ", fechaRetorno=" + fechaRetorno + ", clase=" + clase + '}';
+        return "Vuelo{" + "idVuelo=" + idVuelo + ", aeropuertoOrigen=" + aeropuertoOrigen + ", aeropuertoDestino=" + aeropuertoDestino + ", fechaSalida=" + fechaSalida + ", fechaRetorno=" + fechaRetorno + ", clase=" + clase + '}';
     }
 
     /**

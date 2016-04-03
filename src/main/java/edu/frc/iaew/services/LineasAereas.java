@@ -4,12 +4,14 @@ import edu.frc.iaew.model.Aeropuerto;
 import edu.frc.iaew.model.Clase;
 import edu.frc.iaew.model.Vuelo;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  *
@@ -41,52 +43,30 @@ public class LineasAereas {
     public LineasAereas() {
         vuelos = new ArrayList<Vuelo>() {
             {
-                fechaSalida.set(2016, 04, 16);
-                fechaRetorno.set(2016, 04, 17);
-                add(crearVuelo(1, fechaSalida.getTime(), fechaRetorno.getTime(), 0, 1, Clase.PRIMERA_CLASE));
-                fechaSalida.set(2016, 04, 17);
-                fechaRetorno.set(2016, 04, 19);
-                add(crearVuelo(2, fechaSalida.getTime(), fechaRetorno.getTime(), 0, 2, Clase.TURISTA));
-                fechaSalida.set(2016, 04, 16);
-                fechaRetorno.set(2016, 04, 20);
-                add(crearVuelo(3, fechaSalida.getTime(), fechaRetorno.getTime(), 0, 3, Clase.EJECUTIVA));
-                fechaSalida.set(2016, 04, 16);
-                fechaRetorno.set(2016, 04, 22);
-                add(crearVuelo(4, fechaSalida.getTime(), fechaRetorno.getTime(), 0, 4, Clase.TURISTA));
-                fechaSalida.set(2016, 04, 18);
-                fechaRetorno.set(2016, 04, 21);
-                add(crearVuelo(5, fechaSalida.getTime(), fechaRetorno.getTime(), 0, 5, Clase.PRIMERA_CLASE));
-                fechaSalida.set(2016, 04, 17);
-                fechaRetorno.set(2016, 04, 25);
-                add(crearVuelo(6, fechaSalida.getTime(), fechaRetorno.getTime(), 0, 6, Clase.EJECUTIVA));
-                fechaSalida.set(2016, 04, 17);
-                fechaRetorno.set(2016, 04, 27);
-                add(crearVuelo(7, fechaSalida.getTime(), fechaRetorno.getTime(), 0, 7, Clase.TURISTA));
-                fechaSalida.set(2016, 04, 18);
-                fechaRetorno.set(2016, 04, 22);
-                add(crearVuelo(8, fechaSalida.getTime(), fechaRetorno.getTime(), 0, 8, Clase.PRIMERA_CLASE));
-                fechaSalida.set(2016, 04, 18);
-                fechaRetorno.set(2016, 04, 26);
-                add(crearVuelo(9, fechaSalida.getTime(), fechaRetorno.getTime(), 0, 9, Clase.TURISTA));
-                fechaSalida.set(2016, 04, 18);
-                fechaRetorno.set(2016, 04, 28);
-                add(crearVuelo(10, fechaSalida.getTime(), fechaRetorno.getTime(), 0, 7, Clase.PRIMERA_CLASE));
-
+                add(new Vuelo(1, aeropuertos.get(0), aeropuertos.get(1), new DateTime(2016, 04, 16, 0, 0), new DateTime(2016, 04, 17, 0, 0), Clase.PRIMERA_CLASE));
+                add(new Vuelo(2, aeropuertos.get(0), aeropuertos.get(2), new DateTime(2016, 04, 17, 0, 0), new DateTime(2016, 04, 19, 0, 0), Clase.TURISTA));
+                add(new Vuelo(3, aeropuertos.get(0), aeropuertos.get(3), new DateTime(2016, 04, 16, 0, 0), new DateTime(2016, 04, 20, 0, 0), Clase.EJECUTIVA));
+                add(new Vuelo(4, aeropuertos.get(0), aeropuertos.get(4), new DateTime(2016, 04, 16, 0, 0), new DateTime(2016, 04, 22, 0, 0), Clase.TURISTA));
+                add(new Vuelo(5, aeropuertos.get(0), aeropuertos.get(5), new DateTime(2016, 04, 18, 0, 0), new DateTime(2016, 04, 21, 0, 0), Clase.PRIMERA_CLASE));
+                add(new Vuelo(6, aeropuertos.get(0), aeropuertos.get(6), new DateTime(2016, 04, 17, 0, 0), new DateTime(2016, 04, 25, 0, 0), Clase.EJECUTIVA));
+                add(new Vuelo(7, aeropuertos.get(0), aeropuertos.get(7), new DateTime(2016, 04, 18, 0, 0), new DateTime(2016, 04, 27, 0, 0), Clase.TURISTA));
+                add(new Vuelo(8, aeropuertos.get(0), aeropuertos.get(8), new DateTime(2016, 04, 16, 0, 0), new DateTime(2016, 04, 22, 0, 0), Clase.PRIMERA_CLASE));
+                add(new Vuelo(9, aeropuertos.get(0), aeropuertos.get(9), new DateTime(2016, 04, 18, 0, 0), new DateTime(2016, 04, 26, 0, 0), Clase.TURISTA));
+                add(new Vuelo(10, aeropuertos.get(0), aeropuertos.get(7), new DateTime(2016, 04, 18, 0, 0), new DateTime(2016, 04, 28, 0, 0), Clase.PRIMERA_CLASE));
             }
         };
 
     }
 
-    private Vuelo crearVuelo(int id, Date fechaSalida, Date fechaRetorno, int aeropuertoOrigen, int aeropuertoDestino, Clase clase) {
-        return new Vuelo(id, aeropuertos.get(aeropuertoOrigen), aeropuertos.get(aeropuertoDestino), fechaSalida, fechaRetorno, clase);
-    }
-
     @WebMethod(operationName = "consultarVuelosPorFechaSalida")
-    public String consultarVuelosPorFechaSalida(@WebParam(name = "fechaSalida") Date fechaSalida) {
+    public String consultarVuelosPorFechaSalida(@WebParam(name = "fechaSalida") String fechaSalida) {
+        DateTimeFormatter formaterr = DateTimeFormat.forPattern("dd-MM-yyyy");
+        DateTime salida2;
         StringBuilder str = new StringBuilder();
         boolean flag = true;
+        salida2 = formaterr.parseDateTime(fechaSalida);
         for (Vuelo cadaVuelo : vuelos) {
-            if (cadaVuelo.getFechaSalida().equals(fechaSalida)) {
+            if (sonIguales(cadaVuelo.getFechaSalida(), salida2)) {
                 str.append(cadaVuelo.toString()).append("\n");
                 flag = false;
             }
@@ -95,6 +75,15 @@ public class LineasAereas {
             str.append("{Sin datos}");
         }
         return str.toString();
+    }
+
+    private boolean sonIguales(DateTime salida, DateTime salida2) {
+        if (salida.getYear() == salida2.getYear()) {
+            if (salida.getDayOfYear() == salida2.getDayOfYear()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @WebMethod(operationName = "consultarAeropuertosPorVuelo")
